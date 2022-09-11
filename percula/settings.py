@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'canary.apps.CanaryConfig',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -117,12 +118,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
 
-#STATICFILES_DIRS = [
-#    os.path.join(BASE_DIR, 'static')
-#]
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR.joinpath('static')]
+STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -136,41 +135,4 @@ SECRET_KEY = 'INSECURE'
 
 #host(s) which the canary site is using (example.com, 192.168.40.13, ....)
 ALLOWED_HOSTS = ['127.0.0.1']
-
-# This is a list of allowed (random) strings which have to match the url so the  
-# canary will be triggered. This is to avoid false positives (e.g. from bots). The 
-# URL for the file canary e.g. would look like this: 
-# https://domain.example/<RANDOMSTRING>/files/passwords.txt
-# The RANDOMSTRING would be a string from the list of ALLOWED_URL_STRINGS
-# and the passwords.txt a filename of your choice. It makes sense to have a list
-# of canary strings and where they were used so it is easier to track an alert
-# quickly. The strings can have any format or length, but avoid special characters.
-ALLOWED_URL_STRINGS = [
-                'XXXXX', 
-                'YYYYY',
-                '.....',
-                ]
-
-# mail address which will be alerted
-NOTIFICATION_MAIL = "example@domain.tld"
-
-# sender mail address
-MAIL_SERVER_SENDER_ADDR = "server@localhost"
-
-# if this is set to "localhost", the following MAIL_SERVER_* settings will be ignored
-MAIL_SERVER_ADDRESS = "localhost"
-
-# optional
-MAIL_SERVER_USER = "username"
-
-# optional
-MAIL_SERVER_PASSWD = "password"
-
-# optional
-MAIL_SERVER_PORT = "587"
-
-
-
-
-
 
