@@ -3,7 +3,7 @@ from django.db import models
 
 
 class CanaryString(models.Model):
-    urlstr = models.CharField("URL String", max_length=60)
+    urlstr = models.SlugField("URL String", max_length=60, unique=True)
     urldesc = models.CharField("Description", max_length=250)
     email = models.EmailField("Notification E-Mail")
     enabled = models.BooleanField(default=True)
